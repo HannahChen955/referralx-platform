@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  phone       String   @unique
+  name        String
+  email       String?
+  isAnonymous Boolean  @default(false) // 是否保护身份隐私
+  totalPoints Int      @default(0)    // 总积分
+  level       String   @default("慧眼新人") // 伯乐等级
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联推荐记录
+  referrals Referral[]
+
+  @@map("users")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // 加密后的密码
+  name      String   @default("Administrator")
+  role      String   @default("ADMIN")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_users")
+}
+
+model Job {
+  id                   String   @id @default(cuid())
+  title                String
+  company              String
+  location             String
+  salaryMin            Int?
+  salaryMax            Int?
+  description          String
+  requirements         String
+  benefits             String?
+  referralLimit        Int      @default(50) // 推荐上限（已废弃）
+  currentReferralCount Int      @default(0)  // 当前推荐数
+  commissionRate       Float    @default(0.15) // 企业佣金比例（默认15%）
+  referrerShareRate    Float    @default(0.60) // 推荐人分成比例（默认60%）
+  isActive             Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // 关联推荐记录
+  referrals Referral[]
+
+  @@map("jobs")
+}
+
+model Referral {
+  id               String    @id @default(cuid())
+  jobId            String
+  userId           String
+  candidateName    String
+  candidatePhone   String
+  candidateEmail   String?
+  resumeFileName   String?   // 简历文件名
+  resumeFileUrl    String?   // 简历文件路径
+  reason           String    // 推荐理由
+  status           ReferralStatus @default(SUBMITTED)
+  isAnonymous      Boolean   @default(false) // 推荐人是否要求保密
+  
+  // 双层推荐流程新增字段
+  referralType     ReferralType @default(FORMAL) // 推荐类型
+  isDesensitized   Boolean   @default(false) // 是否已脱敏
+  emailSentAt      DateTime  @default(now())  // 邮件发送时间
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // 关联
+  job  Job  @relation(fields: [jobId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  // 关联进度记录
+  progressHistory ReferralProgress[]
+  
+  // 关联留言
+  messages Message[]
+
+  @@unique([jobId, candidatePhone]) // 同一职位同一候选人只能推荐一次
+  @@map("referrals")
+}
+
+model ReferralProgress {
+  id               String        @id @default(cuid())
+  referralId       String
+  stage            ProgressStage
+  notes            String?
+  rewardAmount     Decimal?      @db.Decimal(10, 2) // 奖金金额
+  probationStartDate DateTime?   // 过保开始日期
+  probationEndDate   DateTime?   // 过保结束日期
+  updatedAt        DateTime      @default(now())
+
+  // 关联
+  referral Referral @relation(fields: [referralId], references: [id])
+
+  @@map("referral_progress")
+}
+
+// 留言系统
+model Message {
+  id          String   @id @default(cuid())
+  referralId  String
+  content     String   @db.Text
+  sender      MessageSender @default(PLATFORM) // 发送者类型
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  // 关联
+  referral Referral @relation(fields: [referralId], references: [id])
+
+  @@map("messages")
+}
+
+// 推荐类型
+enum ReferralType {
+  QUICK_SCREENING  // 快速初筛
+  FORMAL          // 正式推荐
+}
+
+// 留言发送者
+enum MessageSender {
+  PLATFORM        // 平台/管理员
+  USER           // 用户
+}
+
+// 推荐状态
+enum ReferralStatus {
+  SUBMITTED       // 已提交
+  RECRUITER_REVIEW // 猎头初筛中
+  RECRUITER_APPROVED // 猎头通过
+  HR_REVIEW       // HR面试中
+  HR_APPROVED     // HR面试通过
+  OFFER_SENT      // 已发Offer
+  OFFER_ACCEPTED  // 接受Offer
+  ONBOARDED       // 已入职
+  PROBATION_PASSED // 过保完成
+  REJECTED        // 被拒绝
+}
+
+// 进度阶段
+enum ProgressStage {
+  SUBMITTED       // 提交
+  RECRUITER_REVIEW // 猎头初筛
+  HR_INTERVIEW    // HR面试
+  OFFER          // Offer
+  ONBOARD        // 入职
+  PROBATION      // 过保
+}

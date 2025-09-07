@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Login Test</title>
+</head>
+<body>
+    <h1>ReferralX 快速登录测试</h1>
+    <button onclick="quickLogin()">一键登录测试账号</button>
+    <div id="result"></div>
+    
+    <script>
+        function quickLogin() {
+            // 设置测试用户信息
+            const testUser = {
+                id: 'test-user-001',
+                phone: '13800138000',
+                name: '测试用户',
+                email: 'test@example.com'
+            };
+            
+            // 保存到localStorage
+            localStorage.setItem('user', JSON.stringify(testUser));
+            
+            document.getElementById('result').innerHTML = 
+                '<p style="color: green;">登录成功！</p>' +
+                '<p>现在你可以访问：</p>' +
+                '<ul>' +
+                '<li><a href="http://localhost:3002/jobs">职位列表</a></li>' +
+                '<li><a href="http://localhost:3002/referral/cmf7v9glt0007ba40n6ngujao">推荐页面（网易-市场营销专家）</a></li>' +
+                '</ul>';
+        }
+    </script>
+</body>
+</html>

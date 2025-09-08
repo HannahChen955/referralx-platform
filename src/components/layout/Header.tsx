@@ -50,6 +50,12 @@ export function Header() {
             >
               职位列表
             </Link>
+            <Link
+              href="/faq"
+              className="text-gray-700 hover:text-primary-600 transition-colors"
+            >
+              常见问题
+            </Link>
             {user && (
               <Link
                 href="/referral/dashboard"

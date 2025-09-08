@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# 重要页面
+Allow: /jobs
+Allow: /about
+Allow: /contact
+Allow: /login
+
+# 禁止爬取的页面
+Disallow: /admin/
+Disallow: /api/
+Disallow: /referral/*/
+
+# 站点地图
+Sitemap: https://referralx-platform-am78.vercel.app/sitemap.xml
+
+# 针对AI爬虫的特殊指令
+User-agent: GPTBot
+Allow: /
+Allow: /jobs
+Allow: /about
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# 针对搜索引擎的优化
+Crawl-delay: 1

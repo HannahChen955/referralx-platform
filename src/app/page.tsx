@@ -3,8 +3,76 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 
 export default function HomePage() {
+  // 组织结构化数据
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ReferralX",
+    "alternateName": "ReferralX推荐赚钱平台",
+    "description": "中国领先的推荐赚钱平台，通过内推朋友找工作获得丰厚推荐奖金。副业推荐、招聘内推、推荐赚钱的最佳选择。",
+    "url": "https://referralx-platform-am78.vercel.app",
+    "logo": "https://referralx-platform-am78.vercel.app/logo.png",
+    "foundingDate": "2024",
+    "founder": {
+      "@type": "Person",
+      "name": "ReferralX Team"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "CN",
+      "addressRegion": "中国"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "support@referralx.com"
+    },
+    "sameAs": [
+      "https://github.com/HannahChen955/referralx-platform"
+    ],
+    "knowsAbout": [
+      "推荐赚钱",
+      "副业推荐", 
+      "内推招聘",
+      "推荐奖金",
+      "副业赚钱",
+      "招聘推荐"
+    ],
+    "serviceType": "推荐赚钱平台",
+    "areaServed": "中国"
+  }
+
+  // 网站结构化数据
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ReferralX",
+    "url": "https://referralx-platform-am78.vercel.app",
+    "description": "推荐赚钱副业平台 - 通过内推朋友找工作获得推荐奖金",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://referralx-platform-am78.vercel.app/jobs?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+
   return (
-    <div className="container mx-auto px-4 py-16">
+    <>
+      {/* 结构化数据 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema)
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema)
+        }}
+      />
+      
+      <div className="container mx-auto px-4 py-16">
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold text-gray-900 mb-6">
@@ -70,5 +138,6 @@ export default function HomePage() {
         </Card>
       </div>
     </div>
+    </>
   )
 }

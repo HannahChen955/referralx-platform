@@ -1,32 +1,28 @@
+# 演示网站 - 暂时禁止所有爬虫收录
 User-agent: *
-Allow: /
+Disallow: /
 
-# 重要页面
-Allow: /jobs
-Allow: /about
-Allow: /contact
-Allow: /login
+# 禁止所有搜索引擎爬虫
+User-agent: Googlebot
+Disallow: /
 
-# 禁止爬取的页面
-Disallow: /admin/
-Disallow: /api/
-Disallow: /referral/*/
+User-agent: Bingbot
+Disallow: /
 
-# 站点地图
-Sitemap: https://referralx-platform-am78.vercel.app/sitemap.xml
+User-agent: Baiduspider
+Disallow: /
 
-# 针对AI爬虫的特殊指令
+# 禁止AI爬虫（当准备好公开时可以重新开放）
 User-agent: GPTBot
-Allow: /
-Allow: /jobs
-Allow: /about
-Allow: /llms.txt
+Disallow: /
 
 User-agent: ChatGPT-User
-Allow: /
+Disallow: /
 
 User-agent: CCBot
-Allow: /
+Disallow: /
 
-# 针对搜索引擎的优化
-Crawl-delay: 1
+User-agent: Claude-Web
+Disallow: /
+
+# 注释：当网站内容准备就绪后，将此文件恢复为允许爬虫访问

@@ -66,11 +66,17 @@ class VerificationCodeManager {
   // 清理过期验证码
   static cleanupExpired(): void {
     const now = Date.now()
-    for (const [phone, data] of this.codes.entries()) {
+    const phonesToDelete: string[] = []
+    
+    this.codes.forEach((data, phone) => {
       if (now > data.expiry) {
-        this.codes.delete(phone)
+        phonesToDelete.push(phone)
       }
-    }
+    })
+    
+    phonesToDelete.forEach(phone => {
+      this.codes.delete(phone)
+    })
   }
 }
 

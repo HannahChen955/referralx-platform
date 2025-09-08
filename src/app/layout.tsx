@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://referralx-platform-am78.vercel.app'),
   title: 'ReferralX - 推荐赚钱副业平台 | 内推招聘奖金平台 | 副业推荐赚钱',
   description: '中国领先的推荐赚钱平台，通过内推朋友找工作获得丰厚推荐奖金。副业推荐、招聘内推、推荐赚钱的最佳选择。ReferralX让每个人都能通过推荐获得收益。',
   keywords: '推荐赚钱,副业推荐,内推平台,招聘推荐,推荐奖金,副业赚钱,内推招聘,ReferralX,招聘平台,求职推荐',

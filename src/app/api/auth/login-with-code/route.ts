@@ -35,8 +35,7 @@ export async function POST(request: NextRequest) {
       user = await prisma.user.create({
         data: {
           phone,
-          name: `用户${phone.slice(-4)}`, // 默认昵称
-          isActive: true
+          name: `用户${phone.slice(-4)}` // 默认昵称
         }
       })
     }

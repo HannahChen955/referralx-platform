@@ -44,3 +44,5 @@ npm run dev
 ## 项目状态
 
 🚧 正在开发中 - MVP阶段
+
+<!-- Force deployment trigger: 2025-01-09 -->

@@ -14,6 +14,7 @@ export default function LoginPage() {
   const [codeSent, setCodeSent] = useState(false)
   const [countdown, setCountdown] = useState(0)
   const [error, setError] = useState('')
+  const [demoCode, setDemoCode] = useState('')
 
   // 发送验证码
   const sendCode = async () => {
@@ -38,9 +39,11 @@ export default function LoginPage() {
         setCodeSent(true)
         setCountdown(60)
         
-        // 开发环境下显示验证码
+        // 开发环境或演示模式下显示验证码
         if (data.code) {
-          alert(`开发环境验证码：${data.code}`)
+          setDemoCode(data.code)
+          // 也可以用alert作为备用
+          // alert(`验证码：${data.code}`)
         }
 
         // 倒计时
@@ -151,6 +154,17 @@ export default function LoginPage() {
                     {countdown > 0 ? `${countdown}秒` : '重新发送'}
                   </Button>
                 </div>
+                {/* 演示模式下显示验证码 */}
+                {demoCode && (
+                  <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                    <p className="text-sm text-blue-800">
+                      <strong>演示验证码：{demoCode}</strong>
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      （仅在演示环境中显示，生产环境将通过短信发送）
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 

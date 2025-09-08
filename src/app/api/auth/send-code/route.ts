@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: '验证码已发送',
-      // 开发环境下返回验证码，方便测试
-      ...(process.env.NODE_ENV === 'development' ? { code } : {})
+      // 开发环境或演示模式下返回验证码，方便测试
+      ...(process.env.NODE_ENV === 'development' || process.env.DEMO_MODE === 'true' ? { code } : {})
     })
     
   } catch (error) {

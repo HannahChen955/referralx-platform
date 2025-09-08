@@ -14,7 +14,7 @@ export default function FAQPage() {
     },
     {
       question: "推荐奖金有多少？什么时候发放？",
-      answer: "推荐奖金根据职位级别和薪资范围而定，通常在候选人年薪的3%-15%之间。奖金分两次发放：候选人入职后发放50%，通过3个月试用期后发放剩余50%。具体金额在职位详情中会明确标注。"
+      answer: "推荐奖金根据职位级别和薪资范围而定，通常在候选人年薪的3%-15%之间。奖金会在候选人入职并通过试用期（通常3个月）后一次性发放。具体金额在职位详情中会明确标注。"
     },
     {
       question: "我需要什么资格才能成为推荐人？",
@@ -46,7 +46,7 @@ export default function FAQPage() {
     },
     {
       question: "如何联系客服？",
-      answer: "如果您有任何问题，可以通过以下方式联系我们：1) 发送邮件至 support@referralx.com；2) 在线客服咨询；3) 关注我们的微信公众号获取最新资讯。我们会在24小时内回复您的问题。"
+      answer: "如果您有任何问题，可以通过以下方式联系我们：\n\n1) 发送邮件至 support@referralx.com\n2) 在线客服咨询\n3) 关注我们的微信公众号获取最新资讯\n\n我们会在24小时内回复您的问题。"
     }
   ]
 
@@ -90,9 +90,9 @@ export default function FAQPage() {
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
                   {item.question}
                 </h2>
-                <p className="text-gray-700 leading-relaxed">
+                <div className="text-gray-700 leading-relaxed whitespace-pre-line">
                   {item.answer}
-                </p>
+                </div>
               </div>
             ))}
           </div>
